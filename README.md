@@ -1,4 +1,4 @@
-## 前言
+﻿## 前言
 在数据持久化上大概都知道，目前为最好的是GreenDao，执行效率可以达到Sqlite的两倍。所以最近研究了一下GreenDao的使用方法。这里没有那些基础文档，只有使用方式。在项目中我加上了最近正在使用的Butter Knife注解库，顺便提一下Butter Knife的使用方式。
 ## GreenDao的导入
 我选择通过gradle方式进行导入GreenDao库  
@@ -103,5 +103,5 @@ greendao{
 7.关系注解
 - @ToOne：定义与另一个实体的关系
 - @ToMany：定义与多个实体对象的关系  
-## 实战效果图  
+# 实战效果图
 ![image](https://github.com/wjbd/GreenDaoDemo/raw/master/screenshots/greendao.gif)  
