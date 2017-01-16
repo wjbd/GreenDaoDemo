@@ -13,10 +13,25 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    //目录设置
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/java', 'src/main/greendao']
+            jniLibs.srcDirs=['./libs']
+        }
+    }
+    greendao{
+        targetGenDir 'src/main/greendao'
+        daoPackage 'com.greendao'
+        schemaVersion 3
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            resValue("string", "PORT_NUMBER", "8082")
         }
     }
 }
@@ -30,4 +45,5 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.0'
     compile 'com.jakewharton:butterknife:+'
     apt 'com.jakewharton:butterknife-compiler:+'
+    debugCompile 'com.amitshekhar.android:debug-db:0.4.0'
 }

@@ -9,7 +9,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.greendao.adapter.MyAdapter;
-import com.example.greendao.db.DBUtil;
+import com.example.greendao.db.UserDaoManagr;
 import com.example.greendao.entity.User;
 
 import java.util.ArrayList;
@@ -25,25 +25,24 @@ public class MainActivity extends Activity {
     EditText et_age;
     @BindView(R.id.lv)
     ListView lv;
-    private DBUtil dbUtil;
+    private UserDaoManagr mUserDaoManager;
     private List<User> list;
     private MyAdapter adapter;
-    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        dbUtil = DBUtil.getInstance(this);
+        mUserDaoManager = new UserDaoManagr();
         list = new ArrayList<>();
-        user = new User();
         adapter = new MyAdapter(MainActivity.this, list);
     }
 
     public void queryall(View view) {
         list.clear();
-        list.addAll(dbUtil.queryUserList());
+        Log.i("lxq",mUserDaoManager.queryAll()+"");
+        list.addAll(mUserDaoManager.queryAll());
         lv.setAdapter(adapter);
         adapter.notifyDataSetChanged();
     }
@@ -59,7 +58,7 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "年龄不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        User user1 = dbUtil.queryByUserName(name);
+        User user1 = mUserDaoManager.queryByName(name);
         if (user1 == null) {
             Toast.makeText(MainActivity.this, "这个人不存在", Toast.LENGTH_SHORT).show();
             return;
@@ -67,7 +66,7 @@ public class MainActivity extends Activity {
         int age1 = Integer.parseInt(age);
         Log.i("lxq", "修改:" + name + "+" + age1);
         user1.setAge(age1);
-        dbUtil.updateUser(user1);
+        mUserDaoManager.update(user1);
         Toast.makeText(MainActivity.this, "修改成功，修改为" + user1.toString(), Toast.LENGTH_SHORT).show();
     }
 
@@ -78,12 +77,12 @@ public class MainActivity extends Activity {
             return;
         }
         Log.i("lxq", "删除：" + name );
-        User user1 = dbUtil.queryByUserName(name);
+        User user1 = mUserDaoManager.queryByName(name);
         if (user1 == null) {
             Toast.makeText(MainActivity.this, "这个人不存在", Toast.LENGTH_SHORT).show();
             return;
         }
-        dbUtil.deleteUser(user1);
+        mUserDaoManager.delete(user1);
         Toast.makeText(MainActivity.this, "删除成功"+user1.toString(), Toast.LENGTH_SHORT).show();
 
     }
@@ -99,19 +98,18 @@ public class MainActivity extends Activity {
             Toast.makeText(MainActivity.this, "年龄不能为空", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (dbUtil.queryByUserName(name)!=null){
+        if (mUserDaoManager.queryByName(name)!=null){
             Toast.makeText(MainActivity.this, "这个人已经存在", Toast.LENGTH_SHORT).show();
             return;
         }
         int age1 = Integer.parseInt(age);
         Log.i("lxq", "添加" + name + "+" + age);
+        User user = new User();
         user.setName(name);
         user.setAge(age1);
         user.setId(null);
-        dbUtil.insertUser(user);
+        mUserDaoManager.insert(user);
         Toast.makeText(MainActivity.this, "添加成功"+user.toString(), Toast.LENGTH_SHORT).show();
-        user.setName("");
-        user.setAge(-1);
     }
 
 

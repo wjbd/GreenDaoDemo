@@ -17,17 +17,18 @@ public class User {
     @NotNull
     private String name;
     private int age;
+    private int cdname;
 
-
-    @Generated(hash = 586692638)
-    public User() {
-    }
-
-    @Generated(hash = 955858333)
-    public User(Long id, @NotNull String name, int age) {
+    @Generated(hash = 2124964736)
+    public User(Long id, @NotNull String name, int age, int cdname) {
         this.id = id;
         this.name = name;
         this.age = age;
+        this.cdname = cdname;
+    }
+
+    @Generated(hash = 586692638)
+    public User() {
     }
 
     public Long getId() {
@@ -54,12 +55,13 @@ public class User {
         this.age = age;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                '}';
+    public int getCdname() {
+        return this.cdname;
     }
+
+    public void setCdname(int cdname) {
+        this.cdname = cdname;
+    }
+
+
 }
